@@ -1,6 +1,5 @@
 # CameraStageController
 
-## Dependencies
 Need EDSDK API from developers canon. Europe link: https://developers.canon-europe.com/s/ <br>
 Need pre-built opencv binaries.
 
