@@ -1,4 +1,4 @@
 # CameraStageController
 
-Need EDSDK API from developers canon. Add EDSDK_64 to CameraStageController folder.
+Need EDSDK API from developers canon. Add EDSDK_64 and EDSDK to CameraStageController folder. <br>
 Need built opencv binaries. 
