@@ -16,20 +16,24 @@ INCLUDEPATH += C:\OpenCV-4.5.5\opencv\\build\include
 LIBS += -lkernel32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -luser32
 
 LIBS += $$PWD\EDSDK_64\Library\EDSDK.lib
-DLL_FILES += $$PWD\EDSDK_64\Dll\EDSDK.dll
-DLL_FILES += $$PWD\EDSDK_64\Dll\EdsImage.dll
+dll_files.files += $$PWD\EDSDK_64\Dll\EDSDK.dll
+dll_files.files += $$PWD\EDSDK_64\Dll\EdsImage.dll
 
 CONFIG(debug, debug|release) {
   LIBS += C:\OpenCV-4.5.5\opencv\build\x64\vc15\lib\opencv_world455d.lib
-  DLL_FILES += C:\OpenCV-4.5.5\opencv\build\x64\vc15\binopencv_world455d.dll
+  dll_files.files += C:\OpenCV-4.5.5\opencv\build\x64\vc15\bin\opencv_world455d.dll
+  OUTDIR = debug
   CONFIG += console
 }
 
 CONFIG(release, debug|release) {
   LIBS += C:\OpenCV-4.5.5\opencv\build\x64\vc15\lib\opencv_world455.lib
-  DLL_FILES += C:\OpenCV-4.5.5\opencv\build\x64\vc15\binopencv_world455.dll
+  dll_files.files += C:\OpenCV-4.5.5\opencv\build\x64\vc15\bin\opencv_world455.dll
+  OUTDIR = release
 }
 
+dll_files.path = $$OUT_PWD/$$OUTDIR
+INSTALLS += dll_files
 
 SOURCES += \
     Autostitch.cpp \
