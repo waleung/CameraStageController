@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/Stitching">
+        <file>stitchingPattern.png</file>
+        <file>stitchingMask.png</file>
+        <file>autoHelp.png</file>
+    </qresource>
+</RCC>
