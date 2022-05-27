@@ -33,3 +33,5 @@ CONFIG(release, debug|release) {
   OUTDIR = release
 }
 ````
+
+Add a ````make install```` step to the build steps
