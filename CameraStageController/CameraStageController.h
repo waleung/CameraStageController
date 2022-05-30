@@ -1,3 +1,5 @@
+// This class handles the camera and the motor controller
+
 #ifndef CAMERASTAGECONTROLLER_H
 #define CAMERASTAGECONTROLLER_H
 

@@ -43,7 +43,7 @@ public:
 
 private:
 	//Methods
-    void getFirstCamera();
+    void getFirstCamera(); //Gets the reference to the first connected camera
 	void setEventHandles();
     void downloadImages(EdsDirectoryItemRef directoryItem);
 	void downloadEvfData(cv::Mat& image);

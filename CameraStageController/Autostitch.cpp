@@ -6,7 +6,8 @@ AutoStitch::AutoStitch(Scripter &scripter_, CameraStageController &camerastageco
     script_count = 0;
     stitcher_count = 0;
     progress_count = -1;
-    run_number = 0;
+
+    autoEnabled = false;
 }
 
 std::vector<QString> AutoStitch::scriptCreater(double start_x, double start_y)
@@ -65,6 +66,8 @@ void AutoStitch::startAuto()
     connect(&scripter, SIGNAL(finished()), this, SLOT(progressBar()));
     connect(&stitcherWorker, SIGNAL(finished()), this, SLOT(progressBar()));
 
+    autoEnabled = true;
+
     vector_of_scripts.clear();
     listImageFolder.clear();
 
@@ -83,15 +86,15 @@ void AutoStitch::startAuto()
 
     connect(&scripter, SIGNAL(finished()), this, SLOT(run()));
 
+    emit autoState(true);
+
     run();
 }
 
 void AutoStitch::run()
 {
-    if (script_count < vector_of_scripts.size())
+    if ((script_count < vector_of_scripts.size()) && autoEnabled)
     {
-        //camerastagecontroller.setSaveDirectory(imageFolder + "/" + imageFolder.split("/").rbegin()[0] + "_" +
-                                                       //QString::number(run_number).rightJustified(3, '0') + "_" + QString::number(script_count));
         camerastagecontroller.setSaveDirectory(saveFolder + "/GRID_" + QString::number(script_count));
         listImageFolder.append(camerastagecontroller.settings.saveDirectory);
 
@@ -101,7 +104,7 @@ void AutoStitch::run()
 
         //emit progress(++progress_count);
     }
-    else
+    else if (autoEnabled)
     {
         disconnect(&scripter, SIGNAL(finished()), this, SLOT(run()));
 
@@ -112,7 +115,7 @@ void AutoStitch::run()
 
 void AutoStitch::runStitcher()
 {
-    if (stitcher_count < listImageFolder.count())
+    if ((stitcher_count < listImageFolder.count()) && autoEnabled)
     {
         if (stitcherThread.wait(1000))
         {
@@ -131,7 +134,7 @@ void AutoStitch::runStitcher()
             //emit progress(++progress_count);
         }
     }
-    else
+    else if (autoEnabled)
     {
         camerastagecontroller.setSaveDirectory(imageFolder);
         disconnect(&stitcherWorker, SIGNAL(finished()), this, SLOT(runStitcher()));
@@ -144,6 +147,8 @@ void AutoStitch::runStitcher()
         ++stitcher_count;
 
         //emit progress(++progress_count);
+        emit autoState(false);
+        autoEnabled = false;
     }
 }
 
@@ -168,4 +173,25 @@ QString AutoStitch::createSaveDir(QString orgImageFolder)
             return dirname;
     }
     return orgImageFolder + "/" + QString::number(0).rightJustified(3, '0');
+}
+
+void AutoStitch::stopAuto()
+{
+    disconnect(&stitcherWorker, SIGNAL(finished()), this, SLOT(runStitcher()));
+    disconnect(&scripter, SIGNAL(finished()), this, SLOT(run()));
+
+    autoEnabled = false;
+    scripter.stopScript();
+
+    stitcherThread.quit();
+    stitcherThread.wait();
+
+    camerastagecontroller.setSaveDirectory(imageFolder);
+
+    emit autoState(false);
+}
+
+bool AutoStitch::isEnabled()
+{
+    return autoEnabled;
 }

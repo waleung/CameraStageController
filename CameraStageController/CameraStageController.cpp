@@ -18,6 +18,7 @@ bool CameraStageController::connectCamera()
     {
         if (camera.init())
         {
+            //Will create a folder of the current date in the Pictures folder.
             QString temp_dir = QCoreApplication::applicationDirPath() + "/Pictures/" + QDate::currentDate().toString("yyyy_MM_dd");
             //QString temp_dir = QCoreApplication::applicationDirPath() + "/Pictures";
 

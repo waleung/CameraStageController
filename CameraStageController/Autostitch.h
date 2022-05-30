@@ -1,3 +1,5 @@
+//Class concerning the autostitcher
+
 #ifndef AUTOSTITCH_H
 #define AUTOSTITCH_H
 
@@ -17,20 +19,24 @@ public:
     explicit AutoStitch(Scripter &scripter_, CameraStageController &camerastagecontroller_, StitcherWorker &stitcherWorker_, QThread &stitcherThread_, QObject *parent = nullptr);
 
 public slots:
-    void run();
-    void runStitcher();
+    void run(); //Scripter
+    void runStitcher(); //Stitcher
     void progressBar();
 
 signals:
     void progress(int value); //Signal to progress the progressbar
     void setMax(int max); //Signal to set the maximum value for the progressbar
+    void autoState(bool enabled);
 
 public:
     std::vector<QString> scriptCreater(double start_x, double start_y); //Create a X * Y GRID gcode script
-    void startAuto();
+    void startAuto(); //Calls run() and runStitcher() after
+    void stopAuto();
 
     void addStartingCoords(QStringList list);
     void setProperties(int x_size, int y_size, double x_pitch, double y_pitch);
+
+    bool isEnabled();
 
 private:
     QString createSaveDir(QString orgImageFolder); // Creates the directory to save the GRID images. The folder name will be a integer digit. E.g 003
@@ -54,6 +60,8 @@ private:
     int script_count; //Counts the number of scripts done
     int stitcher_count; // Count the number of stitches done
     int progress_count; //Is equal to script_count + progress_count
+
+    bool autoEnabled;
 
     QStringList listImageFolder;
     QString imageFolder;

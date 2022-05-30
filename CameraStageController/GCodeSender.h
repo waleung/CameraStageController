@@ -1,3 +1,5 @@
+//Use this class to send GCode
+
 #ifndef GCODESENDER_H
 #define GCODESENDER_H
 

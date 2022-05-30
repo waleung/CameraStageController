@@ -97,6 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(autoStitch, SIGNAL(setMax(int)), this, SLOT(setMaxProgressBar(int)));
     connect(autoStitch, SIGNAL(progress(int)), this, SLOT(setProgress(int)));
 
+    connect(autoStitch, SIGNAL(autoState(bool)), this, SLOT(autoChangeButton(bool)));
+
     //Help buttons
     connect(ui->HelpPushButton, SIGNAL(clicked()), this, SLOT(showHelp()));
     connect(ui->HelpStitcherPushButton, SIGNAL(clicked()), this, SLOT(showStitcherHelp()));
@@ -347,16 +349,21 @@ void MainWindow::removeCoordinates()
 
 void MainWindow::startAuto()
 {
-    QStringList listCoords;
+    if (!autoStitch->isEnabled())
+    {
+        QStringList listCoords;
 
-    autoStitch->setProperties(ui->GridXSizeDoubleSpinBox->value(), ui->GridYSizeDoubleSpinBox->value(),
-                              ui->GridXpitchDoubleSpinBox->value(), ui->GridYpitchDoubleSpinBox->value());
+        autoStitch->setProperties(ui->GridXSizeDoubleSpinBox->value(), ui->GridYSizeDoubleSpinBox->value(),
+                                  ui->GridXpitchDoubleSpinBox->value(), ui->GridYpitchDoubleSpinBox->value());
 
-    for (int i = 0; i < ui->CoordListWidget->count(); ++i)
-        listCoords.append(ui->CoordListWidget->item(i)->text());
+        for (int i = 0; i < ui->CoordListWidget->count(); ++i)
+            listCoords.append(ui->CoordListWidget->item(i)->text());
 
-    autoStitch->addStartingCoords(listCoords);
-    autoStitch->startAuto();
+        autoStitch->addStartingCoords(listCoords);
+        autoStitch->startAuto();
+    }
+    else
+        autoStitch->stopAuto();
 }
 
 void MainWindow::setMaxProgressBar(int max)
@@ -369,6 +376,14 @@ void MainWindow::setMaxProgressBar(int max)
 void MainWindow::setProgress(int value)
 {
     ui->progressBar->setValue(value);
+}
+
+void MainWindow::autoChangeButton(bool enabled)
+{
+    if (enabled)
+        ui->StartPushButton->setText("Stop!");
+    else
+        ui->StartPushButton->setText("Start!");
 }
 
 void MainWindow::showHelp()

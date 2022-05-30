@@ -84,6 +84,8 @@ public slots:
     void setMaxProgressBar(int max);
     void setProgress(int value);
 
+    void autoChangeButton(bool enabled);
+
     //Help buttons
     void showHelp();
     void showStitcherHelp();
