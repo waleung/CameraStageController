@@ -27,10 +27,10 @@ public:
     QString getSaveDirectoryText();
     QString getISOspeedText();
     void setISOspeedText(int32_t ISOspeed); //Use hex value
-    void setAvailableISO();
+    void setAvailableISO(); //Gets the available ISO settings for the connected camera and adds them to the combobox
 
     void setShutterSpeedText(int32_t shutterSpeed); //Use hex value
-    void setAvailableShutter();
+    void setAvailableShutter(); //Gets the available shutter settings for the connected camera and adds them to the combobox
 
     void clear();
 

@@ -216,6 +216,7 @@ void MainWindow::moveStage(int direction)
     QString move = QString::number(ui->MoveDoubleSpinBox->value());
     switch (direction)
     {
+        //Axis directions are defined in mainwindow.h
         case MOVE_Y_POSITIVE:
             gcodesender->sendCode("G0 Y" + move);
             break;

@@ -5,6 +5,9 @@
 
 #include "Stitcher.h"
 
+//Note: When this class is initilized, all std::cout will be redirected to the main window console output. When deleted it will redirect output back.
+//This class is for the use of a QThread. moveToThread(QThread);
+
 class StitcherWorker : public QObject, public std::basic_streambuf<char>
 {
     Q_OBJECT
@@ -22,8 +25,8 @@ public slots:
 
 signals:
     void finished();
+    //Signal for ouputing the redirected std::cout ouput.
     void logToConsole(QString message);
-    void next();
 
 private:
     Stitcher &stitcher;
@@ -35,6 +38,8 @@ private:
     QString loadFolder;
 
     bool maskEnable;
+
+//overloaded functions to redirect std::cout to GUI console.
 protected:
     virtual std::streamsize xsputn(const char *p, std::streamsize n);
     virtual int_type overflow(int_type v);

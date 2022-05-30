@@ -41,13 +41,16 @@ public:
     ~MainWindow();
 
 public slots:
+    //Camera buttons and functions
     void displayImage();
     void connectCamera();
     void disconnectCamera();
     void captureImage();
 
+    //Opens camerasettingsdialog
     void openCameraSettings();
 
+    //Motor controller buttons and functions
     void sendGCodeCommand();
 
     void getCOMports();
@@ -58,34 +61,40 @@ public slots:
     void stopStage();
     void homing();
 
+    //Script buttons
     void loadScript();
     void startScript();
     void stopScript();
 
-    void writeLog(QString message, int color);
+    void writeLog(QString message, int color); //Writes the message to the mainwindow console
 
+    //Stitcher functions and buttons
     void openImageFolder();
     void openOutputFolder();
     void startStitcher();
 
+    //Button controls for adding/moving/removing starting coordinates from the list
     void addCoordinates();
     void removeCoordinates();
     void moveCoordUp();
     void moveCoordDown();
+
+    //Auto stitcher functions and buttons
     void startAuto();
     void setMaxProgressBar(int max);
     void setProgress(int value);
 
+    //Help buttons
     void showHelp();
     void showStitcherHelp();
     void showAutoHelp();
 
-    void quitApp();
+    void quitApp(); //Quits the application
 
 public:
     void setLiveImageBlack();
-    void readSettings();
-    void writeSettings();
+    void readSettings(); //Read settings from the config.ini file
+    void writeSettings(); //Save settings to the config.ini file
 
     void closeEvent(QCloseEvent *event);
 
@@ -105,11 +114,10 @@ private:
     GCodeSender *gcodesender = nullptr;
 
     Stitcher stitcher;
-    StitcherWorker *stitcherWorker = nullptr;
+    StitcherWorker *stitcherWorker = nullptr; //The stitcher is working on an another thread (stitcherThread). This is done so the main mindow is not blocked while stitching
+    QThread *stitcherThread = nullptr;
 
     AutoStitch *autoStitch = nullptr;
-
-    QThread *stitcherThread = nullptr;
 
     HelpDialog *helpdialog = nullptr;
     StitcherHelpDialog *stitcherhelpdialog = nullptr;

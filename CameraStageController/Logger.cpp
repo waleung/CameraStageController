@@ -3,7 +3,6 @@
 Logger::Logger(QObject *parent)
     : QObject{parent}
 {
-
 }
 
 void Logger::log(QString message, int color)

@@ -449,8 +449,9 @@ void Controller::delayMotor(float delayMillis)
   y_steps = 0;
 }
 
-void Controller::processCommand()
+void Controller::processCommand() 
 {
+  //Check limitswitches
   if (digitalRead(LIMIT_X))
   {
   limit_reached_x = true;
@@ -463,6 +464,7 @@ void Controller::processCommand()
   stepper_y.stop();
   }
 
+  //Check if delay
   if (delayCheck)
   {
     if ((millis() - timeBefore) > delayTime)
@@ -472,6 +474,7 @@ void Controller::processCommand()
    
   unsigned wait_time_micros = multistepper.nextAction();
   if (wait_time_micros <= 0) {
+    //Calculate steps done
     x_steps_done = (x_steps == 0) ? 0 : stepper_x.getStepsCompleted();
     x_steps_done = (x_steps >= 0) ? x_steps_done : -x_steps_done;
     x_now = x_now + x_steps_done;
@@ -480,9 +483,9 @@ void Controller::processCommand()
     y_steps_done = (y_steps >= 0) ? y_steps_done : -y_steps_done;
     y_now = y_now + y_steps_done;
 
-    checkLimits();
+    checkLimits(); //Do extra functions if limit has been triggered. This includes homing,
 
-    delay(100);
+    delay(100); //Wait 100ms before disabling motor
     multistepper.disable(); 
     
     Serial.write("OK\n"); 

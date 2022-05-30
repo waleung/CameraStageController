@@ -25,9 +25,9 @@ public:
 
 private:
 	cv::Mat homographyCompute(cv::Mat img1, cv::Mat img2, bool mask_enable);
-	cv::Rect getBounds(cv::Mat img);
-	cv::Mat removeBorder(cv::Mat img);
-	cv::Mat center_weighting_blend(cv::Mat img1, cv::Mat img2);
+    cv::Rect getBounds(cv::Mat img);
+    cv::Mat removeBorder(cv::Mat img); //Tries to remove the black borders
+    cv::Mat center_weighting_blend(cv::Mat img1, cv::Mat img2); //Image blending technique
 
 public:
 	int GRID_X = 0;

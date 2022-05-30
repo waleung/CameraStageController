@@ -35,7 +35,7 @@ void MotorController::sendGCode(const char GCode[50])
         char sendData[50];
 
         strcpy_s(sendData, GCode);
-        strcat_s(sendData, "\n");
+        strcat_s(sendData, "\n"); // \n works as an end of message symbol
         char_len = strlen(sendData);
 
         if (SP->WriteData(sendData, char_len))
@@ -71,7 +71,7 @@ bool MotorController::isReady()
 	c_end = std::clock();
 	time_elapsed_ms = 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC;
 
-	if (time_elapsed_ms >= 50)
+    if (time_elapsed_ms >= 50) //Must have a delay of ~50ms, or else it wont catch the messages
 	{
 		c_start = std::clock();
 		return readData();

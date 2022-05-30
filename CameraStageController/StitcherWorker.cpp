@@ -24,7 +24,6 @@ void StitcherWorker::process()
         if (stitcher.stitchImages(maskEnable))
             stitcher.saveImage(outputFolder.toStdString().c_str());
     }
-    emit next();
     emit finished();
 }
 

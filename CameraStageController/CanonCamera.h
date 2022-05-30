@@ -21,9 +21,9 @@ public:
     void getDeviceInfo();
 	void setSaveToComputer();
     void setSaveToCamera();
-	void takePicture(); //Must use waitForObjectEvent() to wait for picture to download to PC if setSaveToComputer() (console app) 
-	void waitForObjectEvent();
-	void waitForPropertyEvent();
+    void takePicture(); //Must use waitForObjectEvent() to wait for picture to download to PC if setSaveToComputer() (if using console app)
+    void waitForObjectEvent(); //Only use if console app
+    void waitForPropertyEvent(); //Only use if console app
 	void close();
     void setSaveDirectory(const char directory[300]);
 	void startLiveView(); //Must use waitForPropertyEvent() if console app
@@ -43,9 +43,9 @@ public:
 
 private:
 	//Methods
-	void getFirstCamera();
+    void getFirstCamera();
 	void setEventHandles();
-	void downloadImages(EdsDirectoryItemRef directoryItem);
+    void downloadImages(EdsDirectoryItemRef directoryItem);
 	void downloadEvfData(cv::Mat& image);
 
 	static EdsError EDSCALLBACK handleObjectEvent(EdsObjectEvent event, EdsBaseRef object, EdsVoid* context);

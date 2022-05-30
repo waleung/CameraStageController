@@ -19,22 +19,22 @@ public:
     CameraStageController();
 
 public:
-    QImage getCameraImage();
+    QImage getCameraImage(); //Gets the liveview image from the camera and converts it to a QImage
     bool connectCamera();
     void disconnectCamera();
     void captureImage();
     void setSaveDirectory(QString directory);
 
     void sendGCode(QString gcode);
-    bool stageMessageRec();
-    QString getStageMessage();
+    bool stageMessageRec(); //Returns true if a message has been recieved from the motor controller
+    QString getStageMessage(); //Returns the message recieved
     bool connectToCOM(QString com);
     void disconnectCOM();
 
-    void getListofISO();
+    void getListofISO(); //Gets a list of available ISO settings for the connected camera
     void setISOspeed(int32_t ISOspeed);
 
-    void getListofShutter();
+    void getListofShutter(); //Gets a list of available shutter settings for the connected camera
     void setShutterSpeed(int32_t shutterSpeed);
 
     bool isCameraConnected();
@@ -43,6 +43,7 @@ public:
 private:
 
 public:
+    //Struct of camera settings
     struct {
       char saveDirectory[300];
       char device[300];

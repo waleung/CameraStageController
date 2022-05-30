@@ -27,9 +27,11 @@ signals:
     void finished();
 
 public:
+    //Can load script from file or a vector of QStrings with GCodes
     void loadScript(QString scriptFile);
     void loadScript(std::vector<QString> scriptVector);
-    void startScript();
+
+    void startScript(); //This will call runScript SLOT
     void stopScript();
 
 private:

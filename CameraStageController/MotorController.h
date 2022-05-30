@@ -15,15 +15,15 @@ public:
     void disconnectPort();
 	void sendGCode(const char GCode[50]);
 	bool readData();
-	bool isReady();
-	void waitForReady();
+    bool isReady(); //Checks if message has been received
+    void waitForReady(); //Only use if console app
     bool isConnected();
 
 private:
 
 
 public:
-	char dataReceived[256];
+    char dataReceived[256]; //Variable containing the received message.
 
 
 private:

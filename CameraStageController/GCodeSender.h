@@ -14,7 +14,7 @@ public:
     GCodeSender(CameraStageController &camerastagecontroller_, Logger &logger_, QObject *parent = nullptr);
 
 public slots:
-    void checkReady();
+    void checkReady(); //This will be called every 10ms after a GCode command has been sent.
 
 public:
     void sendCode(QString gcode);
@@ -26,7 +26,7 @@ private:
 
     bool ready;
 
-    QTimer *readyTimer = nullptr;
+    QTimer *readyTimer = nullptr; //Timer for checkReady SLOT. The timer will start after a GCode command and sent and stops when it receives a return message.
 };
 
 #endif // GCODESENDER_H

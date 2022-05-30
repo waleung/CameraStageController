@@ -53,29 +53,29 @@ public:
 public:
   void init();
   void available();
-  void processCommand();
+  void processCommand(); //This will be called everytime a G command or M112 has been proccesed
   bool commandReceived();
   
 private:
-  bool intepretCommand();
-  bool intepretConfigCommand();
-  void moveAbsolute(float X_millis, float Y_millis, int move);
+  bool intepretCommand(); //Decodes the G commands
+  bool intepretConfigCommand(); //Decodes the M Commands
+  void moveAbsolute(float X_millis, float Y_millis, int move); 
   void moveRelative(float X_millis, float Y_millis, int move);
   void moveRapid(float X_millis, float Y_millis);
   void moveLinear(float X_millis, float Y_millis);
-  void homingCycle();
+  void homingCycle(); //G28
   
-  void checkLimits();
-  void checkMaxTravel();
-  void loadConfigs();
+  void checkLimits(); 
+  void checkMaxTravel(); //Prevents the motor to travel further than the define max travel lengths
+  void loadConfigs(); //Loading configs from the EEPROM
   
-  void setRpm(int rpm, int axis);
-  void setMicroStep(int microstep, int axis);
-  void setStepsPerMM(float steps_per_mm, int axis);
-  void setOffset(float offset, int axis);
-  void setMaxTravel(float travel, int axis);
+  void setRpm(int rpm, int axis); //M100
+  void setMicroStep(int microstep, int axis); //M101
+  void setStepsPerMM(float steps_per_mm, int axis); //M102
+  void setOffset(float offset, int axis); //M103
+  void setMaxTravel(float travel, int axis); //M208
 
-  void writeInfo(char *buf, float x, float y, int com);
+  void writeInfo(char *buf, float x, float y, int com); //Writed the info returned by M commands
 
   void delayMotor(float delayMillis);
 
@@ -113,7 +113,7 @@ private:
 
   float delayTime;
 
-  MoveMode mode = ABSOLUTE;
+  MoveMode mode = ABSOLUTE; //Default travel mode
 
 // Configurations
   float RPM_X = 0;

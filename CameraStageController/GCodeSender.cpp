@@ -14,7 +14,7 @@ void GCodeSender::sendCode(QString gcode)
     {
         camerastagecontroller.sendGCode(gcode);
         logger.log("Send: " + gcode);
-        readyTimer->start(10);
+        readyTimer->start(10); //Starts the timer to checkReady() every 10ms
         ready = false;
     }
     else
@@ -25,7 +25,7 @@ void GCodeSender::checkReady()
 {
     if (camerastagecontroller.stageMessageRec())
     {
-        readyTimer->stop();
+        readyTimer->stop(); //Stops the timer
 //        if (camerastagecontroller.getStageMessage().trimmed() == "GCode not recognized")
 //            logger.log("Return: " + camerastagecontroller.getStageMessage().trimmed(), RED);
 //        else

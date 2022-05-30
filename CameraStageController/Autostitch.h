@@ -22,18 +22,19 @@ public slots:
     void progressBar();
 
 signals:
-    void progress(int value);
-    void setMax(int max);
+    void progress(int value); //Signal to progress the progressbar
+    void setMax(int max); //Signal to set the maximum value for the progressbar
 
 public:
-    std::vector<QString> scriptCreater(double start_x, double start_y);
+    std::vector<QString> scriptCreater(double start_x, double start_y); //Create a X * Y GRID gcode script
     void startAuto();
 
     void addStartingCoords(QStringList list);
     void setProperties(int x_size, int y_size, double x_pitch, double y_pitch);
 
 private:
-    QString createSaveDir(QString orgImageFolder);
+    QString createSaveDir(QString orgImageFolder); // Creates the directory to save the GRID images. The folder name will be a integer digit. E.g 003
+    //The folder will be saved to a subfolder set by in the camera settings.
 
 private:
     Scripter &scripter;
@@ -50,10 +51,9 @@ private:
     double gridX_pitch;
     double gridY_pitch;
 
-    int script_count;
-    int stitcher_count;
-    int progress_count;
-    int run_number;
+    int script_count; //Counts the number of scripts done
+    int stitcher_count; // Count the number of stitches done
+    int progress_count; //Is equal to script_count + progress_count
 
     QStringList listImageFolder;
     QString imageFolder;

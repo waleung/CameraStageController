@@ -38,7 +38,7 @@ std::vector<QString> AutoStitch::scriptCreater(double start_x, double start_y)
             script.push_back("G1 Y-" + QString::number(gridY_pitch));
     }
 
-    script.push_back("G4 P3000");
+    script.push_back("G4 P3000"); //Wait for the computer to download the captured images
     script.push_back("M114");
 
     return script;
@@ -71,7 +71,7 @@ void AutoStitch::startAuto()
     for (int i = 0; i < vector_of_start_coords.count(); ++i)
         vector_of_scripts.push_back(scriptCreater(vector_of_start_coords.at(i).at(0).toDouble(), vector_of_start_coords.at(i).at(1).toDouble()));
 
-    emit setMax((vector_of_scripts.size() * 2) + 1);
+    emit setMax((vector_of_scripts.size() * 2) + 1); //For progressbar
 
     script_count = 0;
     stitcher_count = 0;

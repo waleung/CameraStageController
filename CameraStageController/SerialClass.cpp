@@ -21,7 +21,7 @@ Serial::Serial(const wchar_t* portName)
         if (GetLastError() == ERROR_FILE_NOT_FOUND) {
 
             //Print Error if neccessary
-            printf("ERROR: Handle was not attached. Reason: %s not available.\n", portName);
+            printf("ERROR: Handle was not attached. Reason: %ls not available.\n", portName);
 
         }
         else
