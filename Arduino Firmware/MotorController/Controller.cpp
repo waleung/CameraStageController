@@ -500,29 +500,30 @@ void Controller::checkLimits()
   { 
     x_unstuck_steps = (x_steps >= 0) ? -OFFSET_X: OFFSET_X;
     x_unstuck_steps = x_unstuck_steps * MICROSTEPS_X * STEPS_PER_MM_X;
-    x_now = x_now + (int)x_unstuck_steps;
+    //x_now = x_now + (int)x_unstuck_steps;
   }
 
   if (limit_reached_y)
   {
     y_unstuck_steps = (y_steps >= 0) ? -OFFSET_Y: OFFSET_Y;
     y_unstuck_steps = y_unstuck_steps * MICROSTEPS_Y * STEPS_PER_MM_Y;
-    y_now = y_now + (int)y_unstuck_steps;
+    //y_now = y_now + (int)y_unstuck_steps;
   }
 
   if (homing)
   {  
     x_now = 0;
     y_now = 0;
-    homing = false;
+//    homing = false;
   }
     
-  if (limit_reached_x || limit_reached_y)
+  if ((limit_reached_x || limit_reached_y) && homing)
   {
     delay(1000);
     multistepper.move((int)x_unstuck_steps, (int)y_unstuck_steps);
     limit_reached_x = false;
     limit_reached_y = false;
+    homing  = false;
   }
 }
 
