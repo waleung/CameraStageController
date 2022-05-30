@@ -24,10 +24,12 @@ void CameraSettingsDialog::setCameraSettings()
     if (!module_name.isEmpty())
     {
         //qDebug() << temp_dir.split("/").rbegin()[0];
-        if (!(temp_dir.split("/").rbegin()[0] == module_name + "_" + QDate::currentDate().toString("yyyy_MM_dd")))
+        //if (!(temp_dir.split("/").rbegin()[0] == module_name + "_" + QDate::currentDate().toString("dd.MM.yyyy")))
+        if (!(temp_dir.split("/").rbegin()[0] == temp_dir + "/" + module_name))
         {
-            //QString dir_path = QCoreApplication::applicationDirPath() + "/Pictures/" + module_name + "_" + QDate::currentDate().toString("yyyy_MM_dd");
-            QString dir_path = temp_dir + "/" + module_name + "_" + QDate::currentDate().toString("yyyy_MM_dd");
+            //QString dir_path = QCoreApplication::applicationDirPath() + "/Pictures/" + module_name + "_" + QDate::currentDate().toString("dd.MM.yyyy");
+            //QString dir_path = temp_dir + "/" + module_name + "_" + QDate::currentDate().toString("dd.MM.yyyy");
+            QString dir_path = temp_dir + "/" + module_name;
 
             QDir dir(dir_path);
             if (!dir.exists())

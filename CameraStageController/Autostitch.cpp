@@ -6,6 +6,7 @@ AutoStitch::AutoStitch(Scripter &scripter_, CameraStageController &camerastageco
     script_count = 0;
     stitcher_count = 0;
     progress_count = -1;
+    run_number = 0;
 }
 
 std::vector<QString> AutoStitch::scriptCreater(double start_x, double start_y)
@@ -16,25 +17,25 @@ std::vector<QString> AutoStitch::scriptCreater(double start_x, double start_y)
     script.push_back("G1 X" + QString::number(start_x) + " Y" + QString::number(start_y));
     script.push_back("G91");
 
-    for (int i = 0; i < gridX_size; ++i)
+    for (int i = 0; i < gridY_size; ++i)
     {
-        for (int j = 0; j < gridY_size; ++j)
+        for (int j = 0; j < gridX_size; ++j)
         {
             script.push_back("G4 P1000");
             script.push_back("M240");
             script.push_back("G4 P1000");
 
-            if (j < (gridY_size - 1))
+            if (j < (gridX_size - 1))
             {
                 if ((i % 2) == 0)
-                    script.push_back("G1 Y-" + QString::number(gridY_pitch));
+                    script.push_back("G1 X" + QString::number(gridX_pitch));
                 else
-                    script.push_back("G1 Y" + QString::number(gridY_pitch));
+                    script.push_back("G1 X-" + QString::number(gridX_pitch));
             }
         }
 
-        if (i < (gridX_size - 1))
-            script.push_back("G1 X-" + QString::number(gridX_pitch));
+        if (i < (gridY_size - 1))
+            script.push_back("G1 Y-" + QString::number(gridY_pitch));
     }
 
     script.push_back("G4 P3000");
@@ -76,8 +77,9 @@ void AutoStitch::startAuto()
     stitcher_count = 0;
     progress_count = 0;
 
-    imageFolder = camerastagecontroller.settings.saveDirectory;
-    outputFolder = imageFolder + "/Stitched/";
+    imageFolder = camerastagecontroller.settings.saveDirectory; 
+    saveFolder = createSaveDir(imageFolder);
+    outputFolder = saveFolder + "/Stitched/";
 
     connect(&scripter, SIGNAL(finished()), this, SLOT(run()));
 
@@ -88,7 +90,9 @@ void AutoStitch::run()
 {
     if (script_count < vector_of_scripts.size())
     {
-        camerastagecontroller.setSaveDirectory(imageFolder + "/" + imageFolder.split("/").rbegin()[0] + "_" + QString::number(script_count));
+        //camerastagecontroller.setSaveDirectory(imageFolder + "/" + imageFolder.split("/").rbegin()[0] + "_" +
+                                                       //QString::number(run_number).rightJustified(3, '0') + "_" + QString::number(script_count));
+        camerastagecontroller.setSaveDirectory(saveFolder + "/GRID_" + QString::number(script_count));
         listImageFolder.append(camerastagecontroller.settings.saveDirectory);
 
         scripter.loadScript(vector_of_scripts.at(script_count));
@@ -151,4 +155,17 @@ void AutoStitch::progressBar()
         disconnect(&scripter, SIGNAL(finished()), this, SLOT(progressBar()));
     if (stitcher_count > listImageFolder.count())
         disconnect(&stitcherWorker, SIGNAL(finished()), this, SLOT(progressBar()));
+}
+
+QString AutoStitch::createSaveDir(QString orgImageFolder)
+{
+    for (int i = 1; i <= 100; ++i)
+    {
+        QString dirname = orgImageFolder + "/" + QString::number(i).rightJustified(3, '0');
+
+        QDir dir(dirname);
+        if (!dir.exists())
+            return dirname;
+    }
+    return orgImageFolder + "/" + QString::number(0).rightJustified(3, '0');
 }

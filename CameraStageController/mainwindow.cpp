@@ -414,7 +414,7 @@ void MainWindow::writeSettings()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    QMessageBox::StandardButton resBtn = QMessageBox::question( this, "CameraStageController",
+    QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Quit CameraStageController?",
                                                                     tr("Are you sure?\n"),
                                                                     QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
                                                                     QMessageBox::Yes);

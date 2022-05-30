@@ -61,9 +61,9 @@ void CameraStageController::disconnectCamera()
 
 void CameraStageController::captureImage()
 {
-//    QDir dir(settings.saveDirectory);
-//    if (!dir.exists())
-//        dir.mkpath(settings.saveDirectory);
+    QDir dir(settings.saveDirectory);
+    if (!dir.exists())
+        dir.mkpath(settings.saveDirectory);
 
     camera.takePicture();
 }

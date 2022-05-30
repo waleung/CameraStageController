@@ -33,6 +33,9 @@ public:
     void setProperties(int x_size, int y_size, double x_pitch, double y_pitch);
 
 private:
+    QString createSaveDir(QString orgImageFolder);
+
+private:
     Scripter &scripter;
     CameraStageController &camerastagecontroller;
     StitcherWorker &stitcherWorker;
@@ -50,10 +53,12 @@ private:
     int script_count;
     int stitcher_count;
     int progress_count;
+    int run_number;
 
     QStringList listImageFolder;
     QString imageFolder;
     QString outputFolder;
+    QString saveFolder;
 };
 
 #endif // AUTOSTITCH_H

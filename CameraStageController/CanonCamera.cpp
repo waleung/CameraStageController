@@ -230,6 +230,15 @@ void CanonCamera::downloadImages(EdsDirectoryItemRef directoryItem)
 	EdsStreamRef stream = NULL;
     char directory[300];
 
+    struct tm newtime;
+    time_t now = time(NULL);
+    char time_string[32];
+
+    char *token[32];
+
+    localtime_s(&newtime, &now);
+    strftime(time_string, 32, "_%H%M%S.", &newtime);
+
 	// Get directory item information
 	EdsDirectoryItemInfo dirItemInfo;
 	err = EdsGetDirectoryItemInfo(directoryItem, &dirItemInfo);
@@ -238,7 +247,11 @@ void CanonCamera::downloadImages(EdsDirectoryItemRef directoryItem)
 	if (err == EDS_ERR_OK)
 	{
 		strcpy_s(directory, saveDirectory);
-		strcat_s(directory, dirItemInfo.szFileName);
+        //strcat_s(directory, dirItemInfo.szFileName);
+        strcat_s(directory, strtok_s(dirItemInfo.szFileName, ".", token));
+        strcat_s(directory, time_string);
+        strcat_s(directory, strtok_s(NULL, ".", token));
+
 		//err = EdsCreateFileStream(dirItemInfo.szFileName, kEdsFileCreateDisposition_CreateAlways, kEdsAccess_ReadWrite, &stream);
 		err = EdsCreateFileStream(directory, kEdsFileCreateDisposition_CreateAlways, kEdsAccess_ReadWrite, &stream);
 	}
