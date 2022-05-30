@@ -215,26 +215,31 @@ void MainWindow::getCOMports()
 
 void MainWindow::moveStage(int direction)
 {
-    QString move = QString::number(ui->MoveDoubleSpinBox->value());
-    switch (direction)
+    if (gcodesender->isReady())
     {
-        //Axis directions are defined in mainwindow.h
-        case MOVE_Y_POSITIVE:
-            gcodesender->sendCode("G0 Y" + move);
-            break;
+        QString move = QString::number(ui->MoveDoubleSpinBox->value());
+        switch (direction)
+        {
+            //Axis directions are defined in mainwindow.h
+            case MOVE_Y_POSITIVE:
+                gcodesender->sendCode("G0 Y" + move);
+                break;
 
-        case MOVE_Y_NEGATIVE:
-            gcodesender->sendCode("G0 Y-" + move);
-            break;
+            case MOVE_Y_NEGATIVE:
+                gcodesender->sendCode("G0 Y-" + move);
+                break;
 
-        case MOVE_X_POSITIVE:
-            gcodesender->sendCode("G0 X" + move);
-            break;
+            case MOVE_X_POSITIVE:
+                gcodesender->sendCode("G0 X" + move);
+                break;
 
-        case MOVE_X_NEGATIVE:
-            gcodesender->sendCode("G0 X-" + move);
-            break;
+            case MOVE_X_NEGATIVE:
+                gcodesender->sendCode("G0 X-" + move);
+                break;
+        }
     }
+    else
+        logger->log("Busy", YELLOW);
 }
 
 void MainWindow::setRelativeMode()
