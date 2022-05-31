@@ -42,7 +42,7 @@ void CameraSettingsDialog::setCameraSettings()
                   dir.mkpath(temp_dir);
                 }
                 else
-                    temp_dir = camerastagecontroller.settings.saveDirectory;
+                    temp_dir = getSaveDirectoryText();
             }
         }
     }
