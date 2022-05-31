@@ -51,7 +51,8 @@ bool Stitcher::stitchImages(bool mask_enable)
     cv::Mat row = (cv::Mat_<double>(1, 3) << 0, 0, 1);
     double det;
 
-    cv::copyMakeBorder(images.at(0), img, 0, (GRID_Y - 1) * images_gray.at(0).size().height, 0, (GRID_X - 1) * images_gray.at(0).size().width, cv::BORDER_CONSTANT); //Make a image large enough for the pano
+    //cv::copyMakeBorder(images.at(0), img, 0, (GRID_Y - 1) * images_gray.at(0).size().height, 0, (GRID_X - 1) * images_gray.at(0).size().width, cv::BORDER_CONSTANT); //Make a image large enough for the pano
+    cv::copyMakeBorder(images.at(0), img, 0, 32768, 0, 32768, cv::BORDER_CONSTANT);
 
     for (int i = 0; i < (images_gray.size() - 1); ++i)
     {

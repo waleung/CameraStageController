@@ -6,8 +6,8 @@ StitcherWorker::StitcherWorker(Stitcher &stitcher_, std::ostream &stream_, QObje
     old_buf = stream.rdbuf();
     stream.rdbuf(this);
 
-    stitcher.GRID_X = 9;
-    stitcher.GRID_Y = 9;
+    //stitcher.GRID_X = 4;
+    //stitcher.GRID_Y = 5;
 }
 
 StitcherWorker::~StitcherWorker()

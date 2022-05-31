@@ -30,8 +30,8 @@ private:
     cv::Mat center_weighting_blend(cv::Mat img1, cv::Mat img2); //Image blending technique
 
 public:
-	int GRID_X = 0;
-	int GRID_Y = 0;
+    //int GRID_X = 0;
+    //int GRID_Y = 0;
 
 private:
 	std::vector<cv::Mat> images;
