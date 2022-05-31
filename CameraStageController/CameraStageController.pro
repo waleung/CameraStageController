@@ -19,20 +19,19 @@ LIBS += $$PWD\EDSDK_64\Library\EDSDK.lib
 dll_files.files += $$PWD\EDSDK_64\Dll\EDSDK.dll
 dll_files.files += $$PWD\EDSDK_64\Dll\EdsImage.dll
 
+QMAKE_POST_LINK += $(MAKE) install
+
 CONFIG(debug, debug|release) {
   LIBS += C:\OpenCV-4.5.5\opencv\build\x64\vc15\lib\opencv_world455d.lib
   dll_files.files += C:\OpenCV-4.5.5\opencv\build\x64\vc15\bin\opencv_world455d.dll
   OUTDIR = debug
   CONFIG += console
-  QMAKE_POST_LINK += $(MAKE) install
 }
 
 CONFIG(release, debug|release) {
   LIBS += C:\OpenCV-4.5.5\opencv\build\x64\vc15\lib\opencv_world455.lib
   dll_files.files += C:\OpenCV-4.5.5\opencv\build\x64\vc15\bin\opencv_world455.dll
   OUTDIR = release
-  QMAKE_POST_LINK += $(MAKE) install
-  QMAKE_POST_LINK += $(MAKE) clean
 }
 
 dll_files.path = $$OUT_PWD/$$OUTDIR
