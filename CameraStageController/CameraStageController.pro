@@ -87,5 +87,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+RC_ICONS = Resource/icon.ico
+
 RESOURCES += \
     Resource/stitching.qrc
