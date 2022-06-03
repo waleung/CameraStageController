@@ -48,15 +48,21 @@ MainWindow::MainWindow(QWidget *parent)
     //Move buttons
     connect(ui->upButton, SIGNAL(clicked()), &mapper, SLOT(map()));
     mapper.setMapping(ui->upButton, MOVE_Y_POSITIVE);
-
     connect(ui->downButton, SIGNAL(clicked()), &mapper, SLOT(map()));
     mapper.setMapping(ui->downButton, MOVE_Y_NEGATIVE);
-
     connect(ui->leftButton, SIGNAL(clicked()), &mapper, SLOT(map()));
     mapper.setMapping(ui->leftButton, MOVE_X_NEGATIVE);
-
     connect(ui->rightButton, SIGNAL(clicked()), &mapper, SLOT(map()));
     mapper.setMapping(ui->rightButton, MOVE_X_POSITIVE);
+    connect(ui->upLeftButton, SIGNAL(clicked()), &mapper, SLOT(map()));
+    mapper.setMapping(ui->upLeftButton, MOVE_Y_POSITIVE_X_NEGATIVE);
+    connect(ui->upRightButton, SIGNAL(clicked()), &mapper, SLOT(map()));
+    mapper.setMapping(ui->upRightButton, MOVE_Y_POSITIVE_X_POSTIVE);
+    connect(ui->downLeftButton, SIGNAL(clicked()), &mapper, SLOT(map()));
+    mapper.setMapping(ui->downLeftButton, MOVE_Y_NEGATIVE_X_NEGATIVE);
+    connect(ui->downRightButton, SIGNAL(clicked()), &mapper, SLOT(map()));
+    mapper.setMapping(ui->downRightButton, MOVE_Y_NEGATIVE_X_POSTIVE);
+
 
     connect(&mapper, SIGNAL(mapped(int)), this, SLOT(moveStage(int)));
 
@@ -222,19 +228,35 @@ void MainWindow::moveStage(int direction)
         {
             //Axis directions are defined in mainwindow.h
             case MOVE_Y_POSITIVE:
-                gcodesender->sendCode("G0 Y" + move);
+                gcodesender->sendCode("G1 Y" + move);
                 break;
 
             case MOVE_Y_NEGATIVE:
-                gcodesender->sendCode("G0 Y-" + move);
+                gcodesender->sendCode("G1 Y-" + move);
                 break;
 
             case MOVE_X_POSITIVE:
-                gcodesender->sendCode("G0 X" + move);
+                gcodesender->sendCode("G1 X" + move);
                 break;
 
             case MOVE_X_NEGATIVE:
-                gcodesender->sendCode("G0 X-" + move);
+                gcodesender->sendCode("G1 X-" + move);
+                break;
+
+            case MOVE_Y_POSITIVE_X_NEGATIVE:
+                gcodesender->sendCode("G1 X-" + move + " Y" + move);
+                break;
+
+            case MOVE_Y_POSITIVE_X_POSTIVE:
+                gcodesender->sendCode("G1 X" + move + " Y" + move);
+                break;
+
+            case MOVE_Y_NEGATIVE_X_NEGATIVE:
+                gcodesender->sendCode("G1 X-" + move + " Y-" + move);
+                break;
+
+            case MOVE_Y_NEGATIVE_X_POSTIVE:
+                gcodesender->sendCode("G1 X" + move + " Y-" + move);
                 break;
         }
     }
