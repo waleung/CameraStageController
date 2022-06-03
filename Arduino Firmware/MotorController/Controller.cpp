@@ -365,12 +365,12 @@ void Controller::moveAbsolute(float X_millis, float Y_millis, int move)
   {
     case LINEAR:
       syncstepper.enable();
-      syncstepper.startMove(-x_steps, -y_steps);
+      syncstepper.startMove(x_steps * DIRECTION, y_steps * DIRECTION);
       break;
   
     case RAPID:
       multistepper.enable();
-      multistepper.startMove(-x_steps, -y_steps);
+      multistepper.startMove(x_steps * DIRECTION, y_steps * DIRECTION);
       break;
   }
 } 
@@ -523,7 +523,7 @@ void Controller::checkLimits()
   if ((limit_reached_x || limit_reached_y) && homing)
   {
     delay(1000);
-    multistepper.move(-(int)x_unstuck_steps, -(int)y_unstuck_steps);
+    multistepper.move((int)x_unstuck_steps * DIRECTION, (int)y_unstuck_steps * DIRECTION);
     limit_reached_x = false;
     limit_reached_y = false;
     homing  = false;

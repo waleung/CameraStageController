@@ -44,6 +44,8 @@
 #define RAPID 0
 #define LINEAR 1
 
+#define DIRECTION -1
+
 class Controller
 {
 public:

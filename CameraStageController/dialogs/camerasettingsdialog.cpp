@@ -25,7 +25,7 @@ void CameraSettingsDialog::setCameraSettings()
     {
         //qDebug() << temp_dir.split("/").rbegin()[0];
         //if (!(temp_dir.split("/").rbegin()[0] == module_name + "_" + QDate::currentDate().toString("dd.MM.yyyy")))
-        if (!(temp_dir.split("/").rbegin()[0] == temp_dir + "/" + module_name))
+        if (!(temp_dir.split("/").rbegin()[0] == module_name))
         {
             //QString dir_path = QCoreApplication::applicationDirPath() + "/Pictures/" + module_name + "_" + QDate::currentDate().toString("dd.MM.yyyy");
             //QString dir_path = temp_dir + "/" + module_name + "_" + QDate::currentDate().toString("dd.MM.yyyy");
@@ -35,7 +35,7 @@ void CameraSettingsDialog::setCameraSettings()
             if (!dir.exists())
             {
                 QMessageBox::StandardButton reply;
-                reply = QMessageBox::question(this, "Directory Name", "Save pictures to \" " + dir_path + " \" ?", QMessageBox::Yes|QMessageBox::No);
+                reply = QMessageBox::question(this, "Directory Name", "Create folder named \" " + dir_path + " \" ?", QMessageBox::Yes|QMessageBox::No);
                 if (reply == QMessageBox::Yes)
                 {
                   temp_dir = dir_path;
